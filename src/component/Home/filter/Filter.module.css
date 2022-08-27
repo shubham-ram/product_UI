@@ -1,0 +1,24 @@
+.filter_parent{
+    /* text-align: right; */
+    margin:  1.5rem 1rem;
+}
+
+.filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.filter_search{
+    display: flex;
+    align-items: center;
+}
+.filter select{
+    padding: 8px 16px;
+    margin-right: 9px;
+}
+
+.title{
+    margin: 0;
+}

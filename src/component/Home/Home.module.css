@@ -1,0 +1,10 @@
+.home{
+    margin-top: 7rem;
+    /* padding: 0 2.7rem; */
+}
+.productlist{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}

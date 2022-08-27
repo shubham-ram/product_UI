@@ -1,0 +1,9 @@
+.MuiAlert-root{
+    position: fixed;
+    top: 1rem;
+    left: 28rem;
+    margin: auto;
+    width: 20rem;
+    padding: 8px 16px;
+    z-index: 10000;
+}

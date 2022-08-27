@@ -1,0 +1,16 @@
+.createIcon{
+    font-size: 4rem !important;
+    position: fixed;
+    bottom: 2.5rem;
+    right: 3.5rem;
+    cursor: pointer;
+}
+.MuiTooltip-popper{
+    margin-bottom: 1px !important;
+}
+.css-1k51tf5-MuiTooltip-tooltip{
+    padding: 9px 15px !important;
+    font-size: 1rem !important;
+    border-radius: 4px;
+    color: #fff;
+}

@@ -1,0 +1,61 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.product_parent{
+    margin-top: 7rem;
+    padding: 2rem 5rem;
+}
+
+.product_form form{
+    display: flex;
+    width: 42rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.product_top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product_form form input, .product_form form select{
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    height: 2rem;
+    width: 16rem;
+    margin:1rem;
+}
+.product_form form select{
+    height: 3.2rem;
+}
+
+.product_bottom{
+    width: 38rem !important;
+}
+
+.btn{
+    margin: 1rem !important;
+    height: 2.5rem;
+    background-color: rgb(117, 49, 250) !important;
+}
+
+.error{
+    background-color: #FBD6D0;
+    border-color: red;
+    /* color: red; */
+}
+
+.error::placeholder{
+    color: red;
+}

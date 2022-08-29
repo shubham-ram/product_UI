@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import styles from "./Filter.module.css"
-import { setCategoryValue } from "../../../feature/Filter/Filter";
+import { setCategoryValue } from "../../../feature/userInput/userInput";
 
 
 const categoryList = [{ value: "Mobile" },

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 
 import Product from "./product/Product";
@@ -18,9 +18,9 @@ const API_URL_get=`http://${IP_ADD}:8086/payments/product/all`
 const API_URL_getBySearch = `http://${IP_ADD}:8086/payments/product/particular_name?name=`
 const API_URL_getByCategory = `http://${IP_ADD}:8086/payments/product/all?category=`
 
-const  Home = ({searchedValue})=>{
+const  Home = ()=>{
 
-    const {filterValue}  = useSelector(state => state.filterReducer)
+    const {categoryValue, searchValue} = useSelector(state => state.userInputReducer);
     
     const [data, setData] = useState([]);
     const [noproduct, setNoProduct] = useState(false);
@@ -34,10 +34,10 @@ const  Home = ({searchedValue})=>{
 
 
     useEffect(()=>{
-        if(filterValue !== ""){
+        if(categoryValue !== ""){
             const getDataBySearch =async()=>{
-                console.log(API_URL_getByCategory+filterValue);
-                let response =  await axios.get(API_URL_getByCategory+filterValue);
+                console.log(API_URL_getByCategory+categoryValue);
+                let response =  await axios.get(API_URL_getByCategory+categoryValue);
                 console.log(response.data);
                 if(response.data.length !== 0){
                     setData(response.data);
@@ -48,47 +48,49 @@ const  Home = ({searchedValue})=>{
                 }
             }
             // getDataBySearch();
-            console.log("filter value", filterValue)
+            console.log("category value", categoryValue)
         }
-    },[filterValue])
+    },[categoryValue])
 
-    // useEffect( ()=>{
-    //     let response
+    useEffect( ()=>{
+        let response
 
-    //     async function getData(){
-    //         response = await axios.get(API_URL_get);
-    //         console.log(response)
-    //         if(response.data.length !== 0){
-    //             setData(response.data);
-    //             setLoader(false);
-    //             setNoProduct(false)
-    //         }else{
-    //             setNoProduct(true);
-    //             setLoader(false);
-    //         }
-    //     }
+        async function getData(){
+            response = await axios.get(API_URL_get);
+            console.log(response)
+            if(response.data.length !== 0){
+                setData(response.data);
+                setLoader(false);
+                setNoProduct(false)
+            }else{
+                setNoProduct(true);
+                setLoader(false);
+            }
+        }
 
-    //     async function getDataBySearch(){
-    //         response =  await axios.get(API_URL_getBySearch+searchedValue);
-    //         console.log(response.data);
+        async function getDataBySearch(){
+            response =  await axios.get(API_URL_getBySearch+searchValue);
+            console.log(response.data);
 
-    //         if(response.data.length !== 0){
-    //             setData(response.data);
-    //             setLoader(false);
-    //             setNoProduct(false)
-    //         }else{
-    //             setNoProduct(true);
-    //             setLoader(false);
-    //         }
-    //     }
+            if(response.data.length !== 0){
+                setData(response.data);
+                setLoader(false);
+                setNoProduct(false)
+            }else{
+                setNoProduct(true);
+                setLoader(false);
+            }
+        }
 
-    //     if(searchedValue){
-    //         getDataBySearch();
-    //     }else{
-    //         getData();
-    //     }
+        if(searchValue){
+            // getDataBySearch();
+            console.log("search Value >>", searchValue)
+        }else{
+            // getData();
+            console.log("default")
+        }
 
-    // }, [searchedValue])
+    }, [searchValue])
 
 
     const delHandler= async(v) => {

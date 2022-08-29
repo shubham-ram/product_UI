@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userInputReducerSlice = createSlice({
     name:"userInput",
-    initialValue: {
+    initialState: {
         categoryValue: "",
         searchValue: "" 
     },

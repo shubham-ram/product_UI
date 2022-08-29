@@ -7,6 +7,7 @@ const productReducerSlice = createSlice({
         category: "",
         price: "",
         imgUrl:"",
+        productId:"",
         nameCheck:true,
         priceCheck: true,
         categoryCheck: true,
@@ -17,6 +18,7 @@ const productReducerSlice = createSlice({
         setCategory: (state, action) => {state.category = action.payload},
         setPrice: (state, action) => {state.price = action.payload},
         setImgUrl: (state, action) => {state.imgUrl = action.payload},
+        setProductId: (state, action) => {state.productId = action.payload},
         setNameCheck: (state, action) => {state.nameCheck = action.payload},
         setPriceCheck : (state, action) => {state.priceCheck = action.payload},
         setCategoryCheck: (state, action) => {state.categoryCheck = action.payload},
@@ -25,5 +27,5 @@ const productReducerSlice = createSlice({
 })
 
 export default productReducerSlice.reducer;
-export const {setName, setCategory, setPrice, setImgUrl} = productReducerSlice.actions;
+export const {setName, setCategory, setPrice, setImgUrl, setProductId} = productReducerSlice.actions;
 export const {setNameCheck, setCategoryCheck, setPriceCheck, setImgUrlCheck} = productReducerSlice.actions;

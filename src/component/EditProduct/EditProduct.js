@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux"
+import { setName, setCategory, setImgUrl, setPrice, setProductId } from "../../feature/product/Product";
+import axios from "axios";
 
 import Navbar from "../Navbar/Navbar";
 import PopupSuccess from "../CreateProduct/Popup/PopupSuccess"
@@ -8,7 +11,6 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 import styles from "../CreateProduct/CreateProduct.module.css"
-import axios from "axios";
 
 const categoryList = [{ value: "Mobile" },
 { value: "Laptop" },
@@ -23,28 +25,26 @@ function EditProduct() {
 
     const {id} = useParams();
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const {name, category, price, imgUrl, productId} = useSelector(state => state.productReducer);
 
-    const [name, setName] = useState("");
-    const [category, setCategory] = useState("");
-    const [price, setPrice] = useState("");
-    const [imgUrl, setImgUrl] = useState("");
-    const [productId, setProductId] = useState("");
     const [updateProduct, setUpdateProduct] = useState(false)
 
-    const nameHandler = (event) => setName(event.target.value);
-    const categoryHandler = (event) => setCategory(event.target.value);
-    const priceHandler = (event) => setPrice(event.target.value);
-    const imgUrlHandler = (event) => setImgUrl(event.target.value);
+    const nameHandler = (event) => dispatch(setName(event.target.value))
+    const categoryHandler = (event) => dispatch(setCategory(event.target.value));
+    const priceHandler = (event) => dispatch(setPrice(event.target.value));
+    const imgUrlHandler = (event) => dispatch(setImgUrl(event.target.value));
 
     useEffect(()=>{
         const getData =async() =>{
             let response =await axios.get(`${API_URL_get}${id}`);
             console.log(response.data);
-            setProductId(response.data.id)
-            setName(response.data.name);
-            setImgUrl(response.data.image);
-            setCategory(response.data.category);
-            setPrice(response.data.price)
+
+            dispatch(setName(response.data.name));
+            dispatch(setCategory(response.data.category));
+            dispatch(setPrice(response.data.price));
+            dispatch(setImgUrl(response.data.image));
+            dispatch(setProductId(response.data.id));
         }
         getData();
     },[])

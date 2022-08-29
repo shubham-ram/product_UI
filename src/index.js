@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import CreateProduct from './component/CreateProduct/CreateProduct';
 import EditProduct from './component/EditProduct/EditProduct';
+import { Provider } from 'react-redux';
+import store from "./app/store"
 
 import {
   BrowserRouter,
@@ -17,15 +19,17 @@ import {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App/>}></Route>
-      <Route path="/createproduct" element={<CreateProduct/>}></Route>
-      <Route path="/editproduct/:id" element={<EditProduct/>}></Route>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App/>}></Route>
+        <Route path="/createproduct" element={<CreateProduct/>}></Route>
+        <Route path="/editproduct/:id" element={<EditProduct/>}></Route>
 
 
-    </Routes>
-  </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import NoProduct from "../NoProduct/NoProduct";
+import {useSelector} from "react-redux";
 import axios from "axios";
 
 import Product from "./product/Product";
@@ -7,6 +7,7 @@ import CreateProductIcon from "../CreateProduct/CreateProductIcon";
 import Filter from "./filter/Filter";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import PopupSuccess from "../CreateProduct/Popup/PopupSuccess";
+import NoProduct from "../NoProduct/NoProduct";
 import Loader from "../Loader/Loader";
 
 
@@ -18,9 +19,10 @@ const API_URL_getBySearch = `http://${IP_ADD}:8086/payments/product/particular_n
 const API_URL_getByCategory = `http://${IP_ADD}:8086/payments/product/all?category=`
 
 const  Home = ({searchedValue})=>{
+
+    const {filterValue}  = useSelector(state => state.filterReducer)
     
     const [data, setData] = useState([]);
-    const [filterValue, setFilterValue] = useState(undefined)
     const [noproduct, setNoProduct] = useState(false);
     const [delPro, setDelPro] = useState(false);
     const [createSuccess, setCreateSuccess] = useState(false);
@@ -31,23 +33,24 @@ const  Home = ({searchedValue})=>{
 
 
 
-    // useEffect(()=>{
-    //     if(filterValue !== undefined){
-    //     const getDataBySearch =async()=>{
-    //         console.log(API_URL_getByCategory+filterValue);
-    //         let response =  await axios.get(API_URL_getByCategory+filterValue);
-    //         console.log(response.data);
-    //         if(response.data.length !== 0){
-    //             setData(response.data);
-    //             setLoader(false);
-    //         }else{
-    //             setNoProduct(true);
-    //             setLoader(false);
-    //         }
-    //     }
-    //     getDataBySearch();
-    // }
-    // },[filterValue])
+    useEffect(()=>{
+        if(filterValue !== ""){
+            const getDataBySearch =async()=>{
+                console.log(API_URL_getByCategory+filterValue);
+                let response =  await axios.get(API_URL_getByCategory+filterValue);
+                console.log(response.data);
+                if(response.data.length !== 0){
+                    setData(response.data);
+                    setLoader(false);
+                }else{
+                    setNoProduct(true);
+                    setLoader(false);
+                }
+            }
+            // getDataBySearch();
+            console.log("filter value", filterValue)
+        }
+    },[filterValue])
 
     // useEffect( ()=>{
     //     let response
@@ -87,9 +90,6 @@ const  Home = ({searchedValue})=>{
 
     // }, [searchedValue])
 
-    const filterSearch = (v) =>{
-        setFilterValue(v);
-    }
 
     const delHandler= async(v) => {
         // setDelPro(!delPro);
@@ -112,7 +112,7 @@ const  Home = ({searchedValue})=>{
     // console.log(data);
     return <>
         <div className={styles.home}>
-            <Filter filterSearch = {filterSearch}/>
+            <Filter />
             
             {loader 
             ? 

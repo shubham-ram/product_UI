@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux"
+import { setName, setCategory, setImgUrl, setPrice } from "../../feature/product/Product";
+import { setNameCheck, setCategoryCheck, setImgUrlCheck, setPriceCheck } from "../../feature/product/Product";
 import axios from "axios";
 
 import Navbar from "../Navbar/Navbar";
@@ -23,25 +26,29 @@ function CreateProduct() {
     const API_URL = "http://10.10.10.174:8086/payments/product/";
     const navigate = useNavigate();
 
-    const [name, setName] = useState("");
-    const [category, setCategory] = useState("");
-    const [price, setPrice] = useState("");
-    const [imgUrl, setImgUrl] = useState("");
+    const dispatch = useDispatch();
+    const {name, category, price, imgUrl} = useSelector(state => state.productReducer);
+    const {nameCheck, categoryCheck, priceCheck, imgUrlCheck} = useSelector(state => state.productReducer);
 
-    const [nameCheck, setNameCheck] = useState(true);
-    const [priceCheck, setPriceCheck] = useState(true);
-    const [categoryCheck, setCategoryCheck] = useState(true);
-    const [imgUrlCheck, setImgURlCheck] = useState(true);
+    // const [name, setName] = useState("");
+    // const [category, setCategory] = useState("");
+    // const [price, setPrice] = useState("");
+    // const [imgUrl, setImgUrl] = useState("");
+
+    // const [nameCheck, setNameCheck] = useState(true);
+    // const [priceCheck, setPriceCheck] = useState(true);
+    // const [categoryCheck, setCategoryCheck] = useState(true);
+    // const [imgUrlCheck, setImgURlCheck] = useState(true);
 
 
     const [incompleteInfo, setIncompleteInfo] = useState(false) 
     const [completeInfo, setCompleteInfo] = useState(false);
     const [loader, setLoader] = useState(false);
 
-    const nameHandler = (event) => { setName(event.target.value); setNameCheck(true)}
-    const categoryHandler = (event) => {setCategory(event.target.value); setCategoryCheck(true)}
-    const priceHandler = (event) => {setPrice(event.target.value); setPriceCheck(true)}
-    const imgUrlHandler = (event) => {setImgUrl(event.target.value); setImgURlCheck(true)}
+    const nameHandler = (event) => { dispatch(setName(event.target.value)); dispatch(setNameCheck(true))}
+    const categoryHandler = (event) => {dispatch(setCategory(event.target.value)); dispatch(setCategoryCheck(true))}
+    const priceHandler = (event) => {dispatch(setPrice(event.target.value)); dispatch(setPriceCheck(true))}
+    const imgUrlHandler = (event) => {dispatch(setImgUrl(event.target.value)); dispatch(setImgUrlCheck(true))}
 
     const productHandler = async (e) => {
         e.preventDefault();
@@ -49,10 +56,10 @@ function CreateProduct() {
         if(name==="" || price === "" || category === "" || imgUrl ===""){
             setIncompleteInfo(true);
 
-            if(name ==="") setNameCheck(false);
-            if(price ==="") setPriceCheck(false);
-            if(category ==="") setCategoryCheck(false);
-            if(imgUrl ==="") setImgURlCheck(false);
+            if(name ==="") dispatch(setNameCheck(false));
+            if(price ==="") dispatch(setPriceCheck(false));
+            if(category ==="") dispatch(setCategoryCheck(false));
+            if(imgUrl ==="") dispatch(setImgUrlCheck(false));
 
             setTimeout(()=>{
                 setIncompleteInfo(false);
@@ -68,21 +75,23 @@ function CreateProduct() {
                 image: imgUrl
             }
             console.log(data);
-            let response = await axios.post(API_URL, data);
-            console.log(response.data); //Created_success
+            // let response = await axios.post(API_URL, data);
+            // console.log(response.data); //Created_success
 
-            if(response.data === "Created_success"){
-                setLoader(false);
-                setName(""); setPrice(""); setCategory(""); setImgUrl("");
+            // if(response.data === "Created_success"){
+            //     setLoader(false);
+            //     setName(""); setPrice(""); setCategory(""); setImgUrl("");
                 
-                setTimeout(()=>{
-                    setCompleteInfo(false);
-                    navigate("/");
-                },1500)
+            //     setTimeout(()=>{
+            //         setCompleteInfo(false);
+            //         navigate("/");
+            //     },1500)
 
-            }else{
-                setLoader(true)
-            }
+            // }else{
+            //     setLoader(true)
+            // }
+
+            navigate("/");
 
 
         }
